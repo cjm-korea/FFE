@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/IDEAPLUS_2/Desktop/Java/project/FFE/app/src/main/res/drawable/border_layout.xml" value="0.1" />
         <entry key="..\:/Users/IDEAPLUS_2/Desktop/Java/project/FFE/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/IDEAPLUS_2/Desktop/Java/project/FFE/app/src/main/res/layout/activity_result.xml" value="0.33" />
+        <entry key="..\:/Users/IDEAPLUS_2/Desktop/Java/project/FFE/app/src/main/res/layout/activity_result.xml" value="0.25" />
+        <entry key="..\:/Users/IDEAPLUS_2/Desktop/Java/project/FFE/app/src/main/res/layout/border.xml" value="0.290625" />
+        <entry key="..\:/Users/IDEAPLUS_2/Desktop/Java/project/FFE/app/src/main/res/layout/equipment_item.xml" value="0.33" />
       </map>
     </option>
   </component>

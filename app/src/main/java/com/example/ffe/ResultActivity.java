@@ -1,16 +1,13 @@
 package com.example.ffe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -25,12 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-
 public class ResultActivity extends AppCompatActivity {
     final String TAG = "json";
+
+    EquipmentAdapter adapter;
+    RecyclerView recyclerView;
 
     static RequestQueue requestQueue;
     String autenticationKey = "Eh9moxtndpCkUG4jDK0Y3uKpoXwviN8JHPf%2Bp1IFB1xT3szmsNHNYNgDiuDfhkiZzNpc1KtrTZMp6%2FOqYJAdWQ%3D%3D";
@@ -39,8 +35,10 @@ public class ResultActivity extends AppCompatActivity {
     String numOfRows = "&numOfRows=01";
     
     int total = 0;
+    String search;
 
     TextView textView;
+    JSONObject jsonRoot = null;
 
 
     @Override
@@ -48,14 +46,19 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        recyclerView = findViewById(R.id.recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new EquipmentAdapter();
+        recyclerView.setAdapter(adapter);
         // Make 분류코드 intent for search sector
-//        String search = getIntent().getStringExtra("search").toString();
+        Intent myIntent = getIntent();
+        search = myIntent.getStringExtra("search");
+        Log.d(TAG,search);
         
         // First call for set total item size
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         makeRequest();
-        
-        textView = findViewById(R.id.textView);
     }
 
     
@@ -67,9 +70,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 // Parse for total item size
-                JSONParse(response);
-                // Get All items
-                getAllRequest();
+                JSONParseToObject(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -81,22 +82,24 @@ public class ResultActivity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void JSONParse(String response) {
+    private void JSONParseToObject(String response) {
         try {
-            JSONObject jsonRoot = new JSONObject(response);
+            jsonRoot = new JSONObject(response);
             total = Integer.parseInt(jsonRoot.getJSONObject("header").getString("totalCount"));
+            // Get All items
+            getAllRequest();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void getAllRequest() {
-        String numOfRows = "&numOfRows="+ Integer.toString(total);
+        String numOfRows = "&numOfRows="+ Integer.toString(2000);
         String urlStr = "http://apis.data.go.kr/B552486/opnFsuplAprv/opnFsuplAprv01?serviceKey="+ autenticationKey + option + gdsClCd + numOfRows;
         StringRequest request = new StringRequest(Request.Method.GET, urlStr, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                textView.append(response);
+                processResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -107,6 +110,19 @@ public class ResultActivity extends AppCompatActivity {
         request.setShouldCache(false);
         requestQueue.add(request);
     }
+
+    private void processResponse(String response) {
+        Gson gson = new Gson();
+        EquipmentRequest equipmentRequest = gson.fromJson(response, EquipmentRequest.class);
+        for(int i=0;i< equipmentRequest.data.size();i++){
+            if(equipmentRequest.data.get(i).gdsNm.contains(search)){
+                Equipment equipment = equipmentRequest.data.get(i);
+                adapter.addItem(equipment);
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
 //    public class ListViewAdapter extends BaseAdapter {
 //        ArrayList<Equipment> itmes = new ArrayList<Equipment>();

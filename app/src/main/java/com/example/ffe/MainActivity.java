@@ -27,13 +27,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                // If not editText is null
-                if(!searchName.toString().equals("")){
-                    intent.putExtra("search", searchName.toString());
-                    startActivity(intent);
-                }else{
+                if(searchName.getText().toString().equals("")){
                     // if editText is null popup Toast
                     Toast.makeText(MainActivity.this, "검색할 대상을 입력해주세요", Toast.LENGTH_SHORT).show();
+                }else{
+                    // If not editText is null
+                    intent.putExtra("search", searchName.getText().toString());
+                    startActivity(intent);
+
                 }
             }
         });

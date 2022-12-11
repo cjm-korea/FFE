@@ -7,5 +7,5 @@ Need to make dropdown list for gdsClCd
 
 ## Result
 Make 분류코드 intent for search sector  
-Make Curcular Progress Indicators for waiting make cardView  
-Sort Name in searchName
+Make Circular Progress Indicators for waiting make cardView  
+Make null result layout

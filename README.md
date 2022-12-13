@@ -1,11 +1,29 @@
 # What is FFE?
 Find Fire-fighting Equipment
 
-# To do
-## Main
-Need to make dropdown list for gdsClCd  
+# Goal
+Search for government-approved Firefighting Equipments
 
+# Used package
+Gson  
+Volley  
+
+# Used technology
+## Splash Page
+Make modern theme Page
+## Intent
+Change page, Deliver component value
+## Spinner
+Make dropdown button  
+## Inflater
+Make XML object for dynamic layout display  
+## Volley
+Embedded in a package auto-Thread for http request  
+## GSON
+Parsing JSON on object and Class  
+## Adapter
+Bridge of Data-View  
+
+# To do
 ## Result
-Make 분류코드 intent for search sector  
-Make Circular Progress Indicators for waiting make cardView  
-Make null result layout
+Make Search button on title bar for detail search

@@ -4,9 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,46 +32,54 @@ public class ResultActivity extends AppCompatActivity {
 
     EquipmentAdapter adapter;
     RecyclerView recyclerView;
+    FrameLayout resultFrame;
+    LayoutInflater inflater;
 
-    static RequestQueue requestQueue;
-    String autenticationKey = "Eh9moxtndpCkUG4jDK0Y3uKpoXwviN8JHPf%2Bp1IFB1xT3szmsNHNYNgDiuDfhkiZzNpc1KtrTZMp6%2FOqYJAdWQ%3D%3D";
-    String option = "&pageNo=1&fromAprv=20020101&toAprv=20210218";
-    String gdsClCd = "&gdsClCd=02";
-    String numOfRows = "&numOfRows=01";
-    
     int total = 0;
     String search;
+    String gdsClCds;
 
-    TextView textView;
+    static RequestQueue requestQueue;
+    String api;
+    String urlStr = "http://apis.data.go.kr/B552486/opnFsuplAprv/opnFsuplAprv01?serviceKey=";
+    String authenticationKey = "Eh9moxtndpCkUG4jDK0Y3uKpoXwviN8JHPf%2Bp1IFB1xT3szmsNHNYNgDiuDfhkiZzNpc1KtrTZMp6%2FOqYJAdWQ%3D%3D";
+    String option = "&pageNo=1&fromAprv=20020101&toAprv=20210218";
+    String gdsClCd;
+    String numOfRows = "&numOfRows=01";
+
     JSONObject jsonRoot = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new EquipmentAdapter();
         recyclerView.setAdapter(adapter);
-        // Make 분류코드 intent for search sector
+
+        resultFrame = findViewById(R.id.result_frame);
+
         Intent myIntent = getIntent();
         search = myIntent.getStringExtra("search");
-        Log.d(TAG,search);
+        gdsClCds = myIntent.getStringExtra("gdsClCds");
+
+        Log.d(TAG,gdsClCds);
         
         // First call for set total item size
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         makeRequest();
     }
 
-    
+    //region First call is least size because get total item size and get All items
     private void makeRequest() {
-        // First call is least size because get total item size and get All items
-        String numOfRows = "&numOfRows=01";
-        String urlStr = "http://apis.data.go.kr/B552486/opnFsuplAprv/opnFsuplAprv01?serviceKey="+ autenticationKey + option + gdsClCd + numOfRows;
-        StringRequest request = new StringRequest(Request.Method.GET, urlStr, new Response.Listener<String>() {
+        gdsClCd = "&gdsClCd=" + gdsClCds;
+        api = urlStr+ authenticationKey + option + gdsClCd + "&numOfRows=01";
+        StringRequest request = new StringRequest(Request.Method.GET, api, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 // Parse for total item size
@@ -92,11 +105,13 @@ public class ResultActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    //endregion
 
+    //region Call every items in gdsClCd
     private void getAllRequest() {
-        String numOfRows = "&numOfRows="+ Integer.toString(2000);
-        String urlStr = "http://apis.data.go.kr/B552486/opnFsuplAprv/opnFsuplAprv01?serviceKey="+ autenticationKey + option + gdsClCd + numOfRows;
-        StringRequest request = new StringRequest(Request.Method.GET, urlStr, new Response.Listener<String>() {
+        numOfRows = "&numOfRows="+ total;
+        api = urlStr + authenticationKey + option + gdsClCd + numOfRows;
+        StringRequest request = new StringRequest(Request.Method.GET, api, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 processResponse(response);
@@ -119,34 +134,14 @@ public class ResultActivity extends AppCompatActivity {
                 Equipment equipment = equipmentRequest.data.get(i);
                 adapter.addItem(equipment);
             }
+
+        }
+        if(adapter.getItemCount() == 0){
+            Log.d(TAG, "empty page");
+            inflater.inflate(R.layout.empty_page, resultFrame, true);
+        }else{
             adapter.notifyDataSetChanged();
         }
     }
-
-
-//    public class ListViewAdapter extends BaseAdapter {
-//        ArrayList<Equipment> itmes = new ArrayList<Equipment>();
-//
-//        @Override
-//        public int getCount() {
-//            return items.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int i) {
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int i) {
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(int position, View view, ViewGroup viewGroup) {
-//            final Context context = viewGroup.getContext();
-//            final Equipment
-//            return null;
-//        }
-//    }
-    }
+    //endregion
+}

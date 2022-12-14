@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -24,7 +25,9 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
+                android:textColor="@color/black"
                 android:text="제품명"
+                android:background="@drawable/border_layout"
                 tools:ignore="RtlCompat" />
 
             <LinearLayout
@@ -44,13 +47,15 @@
                     android:textAlignment="center"
                     android:maxLines="3"
                     android:ellipsize="end"
-                    android:text="회사명" />
+                    android:textColor="@color/black"
+                    android:text="회사명"/>
 
                 <TextView
                     android:id="@+id/ctfcnFomNm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
+                    android:textColor="@color/black"
                     android:text="제품 상세" />
             </LinearLayout>
 
@@ -62,18 +67,18 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/search_coupang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="쿠팡 검색하기" />
-
-                <Button
                     android:id="@+id/search_google"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:text="구글 검색하기" />
+
+                <Button
+                    android:id="@+id/search_coupang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="쿠팡 검색하기" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

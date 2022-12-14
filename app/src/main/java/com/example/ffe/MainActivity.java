@@ -1,15 +1,21 @@
 package com.example.ffe;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
     final String TAG = "json";
@@ -21,13 +27,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         Button searchBtn = findViewById(R.id.searchBtn);
         EditText searchName = findViewById(R.id.searchName);
         spinner = findViewById(R.id.spinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, gdsClCds);
-        adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_list, gdsClCds);
+        adapter.setDropDownViewResource(R.layout.spinner_list);
         spinner.setAdapter(adapter);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {

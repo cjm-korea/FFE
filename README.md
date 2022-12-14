@@ -24,6 +24,11 @@ Parsing JSON on object and Class
 ## Adapter
 Bridge of Data-View  
 
+## Hard Work
+Button in equipment_item.xml is dynamic created thing. And it's not have Activity & Java class.  
+so Create new Context and allocate view.getContext() for using Activity function.  
+Button setOnClickListener is created since ViewHolder is created.  
+
 # To do
 ## Result
 Make Search button on title bar for detail search

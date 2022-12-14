@@ -1,5 +1,7 @@
 package com.example.ffe;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +12,10 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +36,7 @@ public class ResultActivity extends AppCompatActivity {
     final String TAG = "json";
 
     EquipmentAdapter adapter;
+    EquipmentRequest equipmentRequest;
     RecyclerView recyclerView;
     FrameLayout resultFrame;
     LayoutInflater inflater;
@@ -53,6 +59,8 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.cutom_actionbar);
 
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -68,12 +76,11 @@ public class ResultActivity extends AppCompatActivity {
         search = myIntent.getStringExtra("search");
         gdsClCds = myIntent.getStringExtra("gdsClCds");
 
-        Log.d(TAG,gdsClCds);
-        
         // First call for set total item size
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         makeRequest();
     }
+
 
     //region First call is least size because get total item size and get All items
     private void makeRequest() {
@@ -128,14 +135,14 @@ public class ResultActivity extends AppCompatActivity {
 
     private void processResponse(String response) {
         Gson gson = new Gson();
-        EquipmentRequest equipmentRequest = gson.fromJson(response, EquipmentRequest.class);
+        equipmentRequest = gson.fromJson(response, EquipmentRequest.class);
         for(int i=0;i< equipmentRequest.data.size();i++){
             if(equipmentRequest.data.get(i).gdsNm.contains(search)){
                 Equipment equipment = equipmentRequest.data.get(i);
                 adapter.addItem(equipment);
             }
-
         }
+
         if(adapter.getItemCount() == 0){
             Log.d(TAG, "empty page");
             inflater.inflate(R.layout.empty_page, resultFrame, true);

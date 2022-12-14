@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">FFE</string>
+    <string name="app_name">소방찾</string>
+    <string name="empty_value">검색 결과가 존재하지 않습니다\n다른 검색어나 분류를 선택해주세요</string>
 </resources>

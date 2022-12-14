@@ -25,9 +25,14 @@ Parsing JSON on object and Class
 Bridge of Data-View  
 
 ## Hard Work
+### Button in Adapter
 Button in equipment_item.xml is dynamic created thing. And it's not have Activity & Java class.  
 so Create new Context and allocate view.getContext() for using Activity function.  
 Button setOnClickListener is created since ViewHolder is created.  
+
+### Spinner and Custom Actionbar
+Spinner and Custom Actionbar are need seperated xml.  
+so make it and attach to Activity use Java is difficult things.  
 
 # To do
 ## Result

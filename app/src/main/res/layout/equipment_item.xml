@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -14,7 +14,7 @@
         <LinearLayout
             android:background="@drawable/border_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:weightSum="10"
 
             android:orientation="horizontal">
@@ -56,29 +56,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="9"
                     android:textColor="@color/black"
+
                     android:text="제품 상세" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2.5"
-                android:gravity="right"
+                android:padding="3dp"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/search_google"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:textSize="12sp"
-                    android:text="구글 검색하기" />
-
-                <Button
-                    android:id="@+id/search_coupang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="쿠팡 검색하기" />
+                    android:text="구글\n검색"
+                    android:background="#3143E6"
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

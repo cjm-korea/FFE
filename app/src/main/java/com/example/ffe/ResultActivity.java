@@ -56,31 +56,45 @@ public class ResultActivity extends AppCompatActivity {
     JSONObject jsonRoot = null;
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        //region Create custom Actionbar for alignment center title and make home Btn
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.cutom_actionbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //endregion
+
+        recyclerView = findViewById(R.id.recyclerView);
+        resultFrame = findViewById(R.id.result_frame);
 
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new EquipmentAdapter();
         recyclerView.setAdapter(adapter);
 
-        resultFrame = findViewById(R.id.result_frame);
 
+        //region Get Intent for get information in Mainpage
         Intent myIntent = getIntent();
         search = myIntent.getStringExtra("search");
         gdsClCds = myIntent.getStringExtra("gdsClCds");
+        //endregion
 
         // First call for set total item size
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         makeRequest();
     }
-
 
     //region First call is least size because get total item size and get All items
     private void makeRequest() {

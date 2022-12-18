@@ -11,10 +11,10 @@ Volley
 # Used technology
 ## Splash Page
 Make modern theme Page
+## Spinner
+Make dropdown button
 ## Intent
 Change page, Deliver component value
-## Spinner
-Make dropdown button  
 ## Inflater
 Make XML object for dynamic layout display  
 ## Volley
@@ -31,7 +31,7 @@ so Create new Context and allocate view.getContext() for using Activity function
 Button setOnClickListener is created since ViewHolder is created.  
 
 ### Spinner and Custom Actionbar
-**Spinner and Custom Actionbar** are need seperated xml.  
+**Spinner and Custom Actionbar** are need separated xml.  
 so make it and attach to Activity use Java is difficult things.  
 
 # To do
